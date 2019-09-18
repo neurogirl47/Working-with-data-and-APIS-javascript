@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Working with Database</title>
+    </head>
+    <body>
+        <img src="" id='rainbow'/>
+        <p id='cantwait'></p>
+        <script>
+            console.log("fetching a rainbow");
+
+            catchRainbow().then(response =>{
+                console.log('yay!');
+            }).catch(error=>{
+                console.log('error!');
+                console.error(error);
+            });
+
+            catchSong().then(response =>{
+                console.log('singing!');
+            }).catch(error=>{
+                console.log('oops!');
+                console.error(error);
+            })
+
+            async function catchRainbow() {
+                const response = await fetch('rainbow.jpg');
+                const blob = await response.blob();
+                document.getElementById('rainbow').src=URL.createObjectURL(blob);
+            }
+
+            async function catchSong() {
+                const song = await fetch('cant-wait.txt');
+                console.log(song);
+                const songtext = await song.text();
+                let mysongtext = document.createTextNode(songtext);
+                document.getElementById('cantwait').appendChild(mysongtext);
+
+            }
+        </script>
+    </body>
+</html>
